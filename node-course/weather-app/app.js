@@ -12,11 +12,33 @@ setTimeout(() => console.log('Pingas YA') , 0) // corre DESPUES de "...Stopping.
 console.log('...Stopping.')*/
 //#endregion 
 
-const url = 'https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=' + Auth.loadKeyOpenWeatherMap()
+const url = 'https://api.openweathermap.org/data/2.5/weather?lat=-34.6075682&lon=-58.4370894&units=metric&appid=' + Auth.loadKeyOpenWeatherMap()
 
-request({url: url}, (error,response) => {
+const urlGeoCoding = (ciudad = '', ZIP = '') => {
+    if (ZIP === ''){
+        return 'https://api.openweathermap.org/geo/1.0/direct?q="' + ciudad + '"&appid=' + Auth.loadKeyOpenWeatherMap()
+    }else{
+        return 'http://api.openweathermap.org/geo/1.0/zip?zip=' + ZIP + ',AR&appid=' + Auth.loadKeyOpenWeatherMap()
+    }
+    
+}
 
-    const data = JSON.parse(response.body)
+request({url: url, json: true}, (error,response) => {
 
-    console.log(data)
+    //const data = JSON.parse(response.body)
+
+    //console.log(response.body)
+    console.log(response.body.weather[0].description)
+    console.log('It\'s currently ',response.body.main.temp, ' degrees out. It feels like ', response.body.main.feels_like , ' degrees out.')
+    console.log()
+})
+
+
+
+request({url: urlGeoCoding('Los Angeles',''), json: true}, (error,response) => {
+
+    //const data = JSON.parse(response.body)
+
+    console.log(response.body[0].lat)
+    console.log(response.body[0].lon)
 })
