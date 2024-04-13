@@ -23,6 +23,11 @@ const urlGeoCoding = (ciudad = '', ZIP = '') => {
     
 }
 
+const urlGeoCodingERROR_KEY = (ciudad = '', ZIP = '') => urlGeoCoding(ciudad,ZIP) + 'a'
+
+const urlGeoCodingERROR_URL = (ciudad = '', ZIP = '') => urlGeoCoding(ciudad,ZIP).replace('eat','et')
+
+/*
 request({url: url, json: true}, (error,response) => {
 
     //const data = JSON.parse(response.body)
@@ -31,14 +36,24 @@ request({url: url, json: true}, (error,response) => {
     console.log(response.body.weather[0].description)
     console.log('It\'s currently ',response.body.main.temp, ' degrees out. It feels like ', response.body.main.feels_like , ' degrees out.')
     console.log()
-})
+})*/
 
-
-
-request({url: urlGeoCoding('Los Angeles',''), json: true}, (error,response) => {
-
-    //const data = JSON.parse(response.body)
-
-    console.log(response.body[0].lat)
-    console.log(response.body[0].lon)
+debugger
+request({url: urlGeoCoding('Las Toninas',''), json: true}, (error,response) => {
+    //console.log(response.body)
+    if (error){
+        console.log('Unable to connect to GeoCoding API.')
+    }else if (response.body.length == 0){
+        console.log('No city with the name provided was found')
+    }else try {
+        if (response.body.cod == 401){
+            response.body.cod
+            console.log('Invalid API key. Please see https://openweathermap.org/faq#error401 for more info.')
+        }else{
+            console.log(response.body[0].lat)
+            console.log(response.body[0].lon)
+        }       
+    } catch (error) {
+        console.log('Cagaste Light.')
+    }
 })
