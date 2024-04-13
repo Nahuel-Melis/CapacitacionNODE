@@ -1,5 +1,6 @@
 const request = require('request')
 const Auth = require('./Auth.js')
+const geoCode = require('./utils/geoCode.js')
 
 //#region 1 - Presentacion Async 
 /*console.log('Starting...')
@@ -23,9 +24,6 @@ const urlGeoCoding = (ciudad = '', ZIP = '') => {
     
 }
 
-const urlGeoCodingERROR_KEY = (ciudad = '', ZIP = '') => urlGeoCoding(ciudad,ZIP) + 'a'
-
-const urlGeoCodingERROR_URL = (ciudad = '', ZIP = '') => urlGeoCoding(ciudad,ZIP).replace('eat','et')
 
 /*
 request({url: url, json: true}, (error,response) => {
@@ -39,7 +37,7 @@ request({url: url, json: true}, (error,response) => {
 })*/
 
 debugger
-request({url: urlGeoCoding('Las Toninas',''), json: true}, (error,response) => {
+/*request({url: urlGeoCoding('Las Toninas',''), json: true}, (error,response) => {
     //console.log(response.body)
     if (error){
         console.log('Unable to connect to GeoCoding API.')
@@ -55,5 +53,13 @@ request({url: urlGeoCoding('Las Toninas',''), json: true}, (error,response) => {
         }       
     } catch (error) {
         console.log('Cagaste Light.')
+    }
+})*/
+
+geoCode.geoCode('Las Toninas' , (error , response) => {
+    if (error){
+        console.log(error.error)
+    }else{
+        console.log(response)
     }
 })
