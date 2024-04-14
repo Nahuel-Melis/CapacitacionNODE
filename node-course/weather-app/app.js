@@ -57,20 +57,6 @@ debugger
     }
 })*/
 
-geoCode.geoCode('Las Toninas' , (error , response) => {
-    if (error){
-        console.log(error.error)
-    }else{
-        forecast(response.lat, response.lon, (error, forecastResponse) => {
-            if (error){
-                console.log('Error', error)
-            }else{
-                console.log(response)
-                console.log('Data', forecastResponse)
-            }                      
-          })
-    }
-})
 
 
 //
@@ -83,3 +69,40 @@ geoCode.geoCode('Las Toninas' , (error , response) => {
 //    - Coordinate error, pass string for error
 //    - Success, pass forecast string for data (same format as from before)
 
+/*geoCode.geoCode('Las Toninas' , (error , response) => {
+    if (error){
+        console.log(error.error)
+    }else{
+        forecast(response.lat, response.lon, (error, forecastResponse) => {
+            if (error){
+                console.log('Error', error)
+            }else{
+                console.log(response)
+                console.log('Data', forecastResponse)
+            }                      
+          })
+    }
+})*/
+
+
+//console.log(process.argv)
+//console.log(isNaN(process.argv[2]))
+
+if (typeof process.argv[2] === 'string' && isNaN(process.argv[2])){
+    geoCode.geoCode(process.argv[2] , (error , response) => {
+        if (error){
+            console.log(error.error)
+        }else{
+            forecast(response.lat, response.lon, (error, forecastResponse) => {
+                if (error){
+                    console.log('Error', error)
+                }else{
+                    console.log(response)
+                    console.log('Data', forecastResponse)
+                }                      
+              })
+        }
+    })
+} else {
+    console.log('Please enter a valid City Name.')
+}
