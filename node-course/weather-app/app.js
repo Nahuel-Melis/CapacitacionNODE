@@ -61,7 +61,14 @@ geoCode.geoCode('Las Toninas' , (error , response) => {
     if (error){
         console.log(error.error)
     }else{
-        console.log(response)
+        forecast(response.lat, response.lon, (error, forecastResponse) => {
+            if (error){
+                console.log('Error', error)
+            }else{
+                console.log(response)
+                console.log('Data', forecastResponse)
+            }                      
+          })
     }
 })
 
@@ -76,7 +83,3 @@ geoCode.geoCode('Las Toninas' , (error , response) => {
 //    - Coordinate error, pass string for error
 //    - Success, pass forecast string for data (same format as from before)
 
-forecast(999, 999, (error, data) => {
-    console.log('Error', error)
-    console.log('Data', data)
-  })
